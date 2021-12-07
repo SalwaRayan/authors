@@ -125,3 +125,29 @@ app.get('/authors/:id/books', (req, res) => {
   //   books : bookTitle
   // });
 });
+
+app.get('/authors/:id', (req, res) => {
+  const { id } = req.params
+  const author = authors[id - 1]
+
+  if (author) {
+    res.json({
+      name: author.name,
+      nationality: author.nationality
+    })
+  } else {
+    res.status(404).send("Not found")
+  }
+})
+app.get('/authors/:id/books', (req, res) => {
+  const { id } = req.params
+  const author = authors[id - 1]
+
+  if (author) {
+    res.json({
+      books: [author.books]
+    })
+  } else {
+    res.status(404).send("Not found")
+  }
+})
