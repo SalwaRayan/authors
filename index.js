@@ -24,67 +24,104 @@ app.get('/', (req, res) => {
 //   res.send('Oscar Wilde, UK')
 // })
 
+const authors = [
+  {
+      name: "Lawrence Nowell",
+      nationality: "UK",
+      books: ["Beowulf"]
+  },
+  {
+      name: "William Shakespeare",
+      nationality: "UK",
+      books: ["Hamlet", "Othello", "Romeo and Juliet", "MacBeth"]
+  },
+  {
+      name: "Charles Dickens",
+      nationality: "US",
+      books: ["Oliver Twist", "A Christmas Carol"]
+  },
+  {
+      name: "Oscar Wilde",
+      nationality: "UK",
+      books: ["The Picture of Dorian Gray", "The Importance of Being Earnest"]
+  },
+]
 
-app.get('/authors/:index', (req, res) => {
-  let author = req.params.index
-  console.log(author)
-  let authorName = ""
-  let authorCountry = ""
+app.get('/authors/:id', (req, res) => {
+  const { id } = req.params
+  const author = authors[id - 1]
 
-  switch (author) {
-    case "1":
-      authorName = "Lawrence Nowell"
-      authorCountry = "UK"
-      break
-    case "2": 
-      authorName = "William Shakespeare"
-      authorCountry = "UK"
-      break
-    case "3": 
-      authorName = "Charles Dickens"
-      authorCountry = "US"
-      break
-    case "4": 
-      authorName = "Oscar Wilde"
-      authorCountry = "UK"
-      break
-
-    default: 
-      authorName = "Not found"
-      authorCountry = "None"
-      break
+  if (author) {
+    res.send(`${author.name}, ${author.nationality}`)
+  } else {
+    res.status(404).send("Not found")
   }
 
-  res.json({
-    author: authorName,
-    nationality: authorCountry
-  });
+  // let name = ""
+  // let country = ""
+
+  // switch (id) {
+  //   case "1":
+  //     name = "Lawrence Nowell"
+  //     country = "UK"
+  //     break
+  //   case "2": 
+  //     name = "William Shakespeare"
+  //     country = "UK"
+  //     break
+  //   case "3": 
+  //     name = "Charles Dickens"
+  //     country = "US"
+  //     break
+  //   case "4": 
+  //     name = "Oscar Wilde"
+  //     country = "UK"
+  //     break
+
+  //   default: 
+  //     name = "Not found"
+  //     country = "None"
+  //     break
+  // }
+
+  // res.json({
+    // author: name,
+    // nationality: country
+  // });
 });
 
-app.get('/authors/:index/books', (req, res) => {
-  let author = req.params.index
-  let bookTitle = ""
+app.get('/authors/:id/books', (req, res) => {
+  const { id } = req.params
+  const author = authors[id - 1]
 
-  switch (author) {
-    case "1":
-      bookTitle = "Beowulf"
-      break
-    case "2": 
-      bookTitle = "Hamlet, Othello, Romeo and Juliet, MacBeth"
-      break
-    case "3": 
-      bookTitle = "Oliver Twist, A Christmas Carol"
-      break
-    case "4": 
-      bookTitle = "The Picture of Dorian Gray, The Importance of Being Earnest"
-      break
-
-    default: 
-      bookTitle = "Not found"
-      break
+  if (author) {
+    res.send(`${author.books.join(", ")}`)
+  } else {
+    res.status(404).send("Not found")
   }
+  
+  // let bookTitle = ""
 
-  res.json({
-    books : bookTitle
-  });
+  // switch (id) {
+  //   case "1":
+  //     bookTitle = "Beowulf"
+  //     break
+  //   case "2": 
+  //     bookTitle = "Hamlet, Othello, Romeo and Juliet, MacBeth"
+  //     break
+  //   case "3": 
+  //     bookTitle = "Oliver Twist, A Christmas Carol"
+  //     break
+  //   case "4": 
+  //     bookTitle = "The Picture of Dorian Gray, The Importance of Being Earnest"
+  //     break
+
+  //   default: 
+  //     bookTitle = "Not found"
+  //     break
+  // }
+
+  // res.json({
+  //   books : bookTitle
+  // });
 });
